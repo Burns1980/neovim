@@ -82,9 +82,17 @@ return {
         },
       },
 
+      -- Fixes issue where ":!" causes neovim to freeze because it is reading the
+      -- PATH which includes all Windows paths.
       cmdline = {
         sources = {
-          ['/'] = { 'buffer' },
+          providers = {
+            cmdline = {
+              enabled = function()
+                return vim.fn.getcmdline():sub(1, 1) ~= '!'
+              end,
+            },
+          },
         },
       },
 

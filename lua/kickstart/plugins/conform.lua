@@ -42,6 +42,11 @@ return {
         json = { 'prettierd', 'prettier', stop_after_first = true },
         sql = { 'pg_format' },
       },
+      formatters = {
+        pg_format = {
+          prepend_args = { '--spaces', '2' },
+        },
+      },
     },
   },
 }

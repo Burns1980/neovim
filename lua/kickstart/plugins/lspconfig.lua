@@ -118,6 +118,7 @@ return {
             if vim.fn.has 'nvim-0.11' == 1 then
               return client:supports_method(method, bufnr)
             else
+              ---@diagnostic disable-next-line: param-type-mismatch
               return client.supports_method(method, { bufnr = bufnr })
             end
           end
@@ -219,12 +220,13 @@ return {
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         ts_ls = {},
-        --
-
         eslint = {},
-
-        postgres_lsp = {},
-
+        cssls = {},
+        html = {},
+        postgres_lsp = {
+          cmd = { 'postgrestools', 'lsp-proxy', 'postgrestools', 'start' },
+        },
+        tailwindcss = {},
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -259,9 +261,14 @@ return {
         'stylua', -- Used to format Lua code
         'eslint',
         'ts_ls',
+        'postgres_lsp',
+        'tailwindcss',
+        'cssls',
+        'html',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      ---@diagnostic disable-next-line: missing-fields
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
